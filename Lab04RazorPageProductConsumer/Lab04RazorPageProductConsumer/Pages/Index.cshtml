@@ -1,0 +1,79 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<h1>Index page of Product Consumer app</h1>
+
+<h1>Found @Model.Products?.Count() products</h1>
+
+<div>
+    @if (TempData["success"] != null)
+    {
+        
+      <h4>@TempData["success"]</h4>
+    }
+     @if (TempData["failure"] != null)
+    {
+        
+      <h4>@TempData["failure"]</h4>
+    }
+
+</div>
+
+
+<a asp-page="Add" class="btn btn-primary">Add a new Product</a>
+
+<table class="table table-bordered table-striped"> 
+
+    <thead>
+        <th>Product ID</th>
+     <th>Product Name</th>
+    <th>Available</th>
+    <th>Price</th>
+    <th>Operations</th>
+
+    </thead>
+
+    <tbody>
+        @foreach (var p in Model.Products)
+        {
+            <tr>
+                 <td>@p.Id</td>
+                <td>@p.Name</td>
+            
+            
+                @{
+                    if (p.IsAvailable)
+                    {
+                        <td>
+
+                            yes
+                        </td>
+
+                    }
+                    else
+                    {
+                     <td>No</td>    
+                    }
+
+                }
+
+                <td>@p.Price</td>
+
+                <td>
+                    <a asp-route-myproductid="@p.Id" class="btn  btn-primary"  asp-page="Edit">Edit</a>
+                    <a  asp-route-myproductid="@p.Id" asp-page="Delete" class="btn btn-danger">Delete</a>
+
+                </td>
+          
+
+          </tr>
+        
+        }
+
+
+    </tbody>
+
+</table>
